@@ -25,6 +25,8 @@ const PORT = process.env.PORT || 8000;
 
 // Import routes
 const userRouter = require('./routes/userRoutes');
+const courseRoute = require('./routes/courseRoutes');
+
 
 // Cloudinary Setup
 configureCloudinary();
@@ -47,3 +49,4 @@ app.get('/', (req, res) => {
 
 // Use routes
 app.use('/api/v1/users', userRouter);
+app.use('/api/v1/course', courseRoute);

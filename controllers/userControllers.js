@@ -300,7 +300,7 @@ const updateProfilePicture = CatchAsyncError(async (req, res, next) => {
 
         // Upload new avatar to Cloudinary
         const uploadAtCloud = await cloudinary.uploader.upload(avatar, {
-            folder: "lms/avatars",
+            folder: "lms/user/avatars",
             width: 150,
         });
 
