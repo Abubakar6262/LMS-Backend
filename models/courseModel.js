@@ -1,91 +1,125 @@
-const mongoose = require("mongoose")
+const mongoose = require("mongoose");
 
+// Review schema
 const reviewSchema = new mongoose.Schema({
-   user: Object,
-   rating: {
-      type: Number,
-      default: 0
-   },
-   comment: String
-})
+  user: {
+    type: Object,
+    required: true
+  },
+  rating: {
+    type: Number,
+    default: 0
+  },
+  comment: {
+    type: String,
+    required: true
+  }
+});
 
+// Resource link schema
 const linkSchema = new mongoose.Schema({
-   title: String,
-   url: String
-})
+  title: {
+    type: String,
+    required: true
+  },
+  url: {
+    type: String,
+    required: true
+  }
+});
 
+// Question/comment schema
 const commentSchema = new mongoose.Schema({
-   user: Object,
-   comment: String,
-   commentReplies: Object
-})
+  user: {
+    type: Object,
+    required: true
+  },
+  comment: {
+    type: String,
+    required: true
+  },
+  commentReplies: {
+    type: Object,
+    default: {}
+  }
+});
 
-const courseDataSchea = new mongoose.Schema({
-   videoUrl: String,
-   videoThumbnail: String,
-   title: String,
-   videoSection: String,
-   description: String,
-   videoLength: Number,
-   videoPlayer: String,
-   links: [linkSchema],
-   suggestion: String,
-   questions: [commentSchema]
-})
+// Course content data schema
+const courseDataSchema = new mongoose.Schema({
+  videoUrl: {
+    type: String,
+    required: true
+  },
+  videoThumbnail: {
+    type: String,
+    required: true
+  },
+  title: {
+    type: String,
+    required: true
+  },
+  videoSection: {
+    type: String,
+    required: true
+  },
+  description: String,
+  videoLength: Number,
+  videoPlayer: String,
+  links: [linkSchema],
+  suggestion: String,
+  questions: [commentSchema]
+});
 
+// Main course schema
 const courseSchema = new mongoose.Schema({
-   title: {
+  title: {
+    type: String,
+    required: true 
+  },
+  description: {
+    type: String,
+    required: true
+  },
+  price: {
+    type: Number,
+    required: true 
+  },
+  estimatedPrice: Number,
+  thumbnail: {
+    public_id: {
       type: String,
-      require: true
-   },
-   description: {
+      required: true
+    },
+    url: {
       type: String,
-      require: true
-   },
-   price: {
-      type: Number,
-      return: true
-   },
-   estimatedPrice: {
-      type: Number,
-   },
-   thumbnail: {
-      publick_id: {
-         type: String,
-         require: true
-      },
-      url: {
-         type: String,
-         require: true
-      }
-   },
-   tags: {
-      type: String,
-      require: true
-   },
-   courseLevel: {
-      type: String,
-      require: true
-   },
-   demoUrl: {
-      type: String,
-      require: true
-   },
-   benefits: [{ title: String }],
-   prerequisites: [{ title: String }],
-   reviews: [reviewSchema],
-   courseData: [courseDataSchea],
-   rating: {
-      type: Number,
-      default: 0
-   },
-   purchased: {
-      type: Number,
-      default: 0
-   }
+      required: true
+    }
+  },
+  tags: {
+    type: String,
+    required: true
+  },
+  courseLevel: {
+    type: String,
+    required: true
+  },
+  demoUrl: {
+    type: String,
+    required: true
+  },
+  benefits: [{ title: { type: String, required: true } }],
+  prerequisites: [{ title: { type: String, required: true } }],
+  reviews: [reviewSchema],
+  courseData: [courseDataSchema],
+  rating: {
+    type: Number,
+    default: 0
+  },
+  purchased: {
+    type: Number,
+    default: 0
+  }
+}, { timestamps: true }); 
 
 
-})
-
-
-module.exports = mongoose.model("course", courseSchema)
+module.exports = mongoose.model('Course', courseSchema);

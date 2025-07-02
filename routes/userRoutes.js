@@ -3,6 +3,7 @@ const userRouter = express.Router();
 const { registerUser, activateUser, loginUser, logoutUser, updateAccessToken, getUserInfo, socialAuth, updateUserInfo, updateUserPassword, updateProfilePicture } = require("../controllers/userControllers");
 const { isAuthenticated } = require("../middlewares/Auth");
 
+// test user Route
 userRouter.get("/", (req, res) => {
     res.status(200).json({
         success: true,

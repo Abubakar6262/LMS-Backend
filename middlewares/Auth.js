@@ -11,11 +11,11 @@ const isAuthenticated = CatchAsyncError(async (req, res, next) => {
     }
 
     const decodedData = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-    
+
     if (!decodedData) {
         return next(new ErrorHandler("Invalid token, please login again", 401));
     }
-    
+
     // Check if user exists in Redis
     const userData = await redisClient().get(decodedData.id.toString());
     if (!userData) {
@@ -34,6 +34,6 @@ const validateUserRole = (roles) => {
         }
         next();
     };
-}; 
+};
 
-module.exports = { isAuthenticated };
+module.exports = { isAuthenticated, validateUserRole };
