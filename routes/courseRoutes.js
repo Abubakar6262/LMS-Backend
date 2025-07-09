@@ -4,7 +4,8 @@ const { isAuthenticated, validateUserRole } = require("../middlewares/Auth");
 const {
   uploadCourse,
   getCourseById,
-  updateCourse
+  updateCourse,
+  addQuestion
 } = require("../controllers/courseControllers");
 
 // test route
@@ -22,5 +23,8 @@ courseRouter.get("/get-course/:id",isAuthenticated,getCourseById);
 
 // Update course By id
 courseRouter.put("/update-course/:id",isAuthenticated,validateUserRole("admin"),updateCourse);
+
+// add question
+courseRouter.put("/add-question/:id",isAuthenticated,addQuestion)
 
 module.exports = courseRouter;
