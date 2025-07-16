@@ -277,11 +277,51 @@ const addReview = CatchAsyncError(async (req, res, next) => {
     }
 });
 
+// add replay to review
+const replyToReview = CatchAsyncError(async (req, res, next) => {
+    const { courseId, reviewId } = req.params;
+    const { reply } = req.body;
 
+    if (!reply) {
+        return next(new ErrorHandler("Reply text is required", 400));
+    }
+
+    const course = await courseModel.findById(courseId);
+    if (!course) {
+        return next(new ErrorHandler("Course not found", 404));
+    }
+
+    const review = course.reviews.id(reviewId);
+    if (!review) {
+        return next(new ErrorHandler("Review not found", 404));
+    }
+
+    const replyData = {
+        user: {
+            _id: req.user._id,
+            name: req.user.name,
+            email: req.user.email
+        },
+        reply
+    };
+
+    review.replies = review.replies || [];
+    review.replies.push(replyData);
+
+    await course.save();
+
+    res.status(200).json({
+        success: true,
+        message: "Reply added to review successfully",
+        review
+    });
+});
 module.exports = {
     uploadCourse,
     getCourseById,
     updateCourse,
     addQuestion,
-    addAnswer
+    addAnswer,
+    addReview,
+    replyToReview
 }

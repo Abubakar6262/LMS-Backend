@@ -13,8 +13,25 @@ const reviewSchema = new mongoose.Schema({
   comment: {
     type: String,
     required: true
-  }
+  },
+  replies: [
+    {
+      user: {
+        type: Object,
+        required: true
+      },
+      reply: {
+        type: String,
+        required: true
+      },
+      createdAt: {
+        type: Date,
+        default: Date.now
+      }
+    }
+  ]
 });
+
 
 // Resource link schema
 const linkSchema = new mongoose.Schema({
